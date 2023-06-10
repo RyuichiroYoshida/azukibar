@@ -32,7 +32,7 @@ public class BulletController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             Instantiate(_effectPrefab, transform.position, Quaternion.identity);
-            Destroy(this.gameObject, 2f);
+            Destroy(this.gameObject);
         }
     }
 }
