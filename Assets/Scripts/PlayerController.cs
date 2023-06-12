@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _bulletPrefab;
     [SerializeField] float _bulletCoolTime = 2;
     float _time = 0;
+
+    [SerializeField] GameObject _effectPrefab;
     void Start()
     {
         
@@ -33,6 +35,15 @@ public class PlayerController : MonoBehaviour
                 Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
                 _time = 0;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Enemy")
+        {
+            Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
     }
 }

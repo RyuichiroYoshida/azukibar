@@ -12,7 +12,7 @@ public class BulletController : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -27,12 +27,15 @@ public class BulletController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
             Instantiate(_effectPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+            //Destroy(collision.gameObject);
+
         }
     }
 }
