@@ -588,7 +588,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765229090}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.688934, y: -0.100000024, z: 0}
+  m_LocalPosition: {x: 8.688934, y: -0.100000024, z: -1}
   m_LocalScale: {x: 3.21355, y: 9.992831, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f39407490fd5d4080b3696cbb67a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bossLife: 1
+  _bossLife: 2
   _effect: {fileID: 1657118420}
 --- !u!1 &1218571010
 GameObject:
@@ -1191,7 +1191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657118418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.004, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.31118232, y: 0.100071736, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1211,6 +1211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectPrefab: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
+  _controller: {fileID: 765229094}
+  _transform: {fileID: 1657118419}
 --- !u!1 &1689859200
 GameObject:
   m_ObjectHideFlags: 3
