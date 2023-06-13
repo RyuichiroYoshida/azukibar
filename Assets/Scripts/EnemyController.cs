@@ -12,17 +12,16 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        Transform player = GetComponent<Transform>();
-        if (player == null)
+        if (_player != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, _bossSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _player.position, _bossSpeed * Time.deltaTime);
         }
     }
 

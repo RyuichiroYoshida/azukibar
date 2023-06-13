@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bossLife: 5
+  _bossSpeed: 5
+  _player: {fileID: 0}

@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _bulletCoolTime = 2;
     float _time = 0;
 
+    public GameManager _gameManager;
+
     [SerializeField] GameObject _effectPrefab;
     void Start()
     {
@@ -30,9 +32,11 @@ public class PlayerController : MonoBehaviour
         _time += Time.deltaTime;
         if (Input.GetAxisRaw("Jump") == 1)
         {
+            Vector3 localPos = transform.localPosition;
+            localPos.x += 1;
             if (_time > _bulletCoolTime)
             {
-                Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
+                Instantiate(_bulletPrefab, new Vector3(localPos.x, localPos.y, localPos.z), Quaternion.identity);
                 _time = 0;
             }
         }
@@ -40,9 +44,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Enemy")
+        if (collision.collider.CompareTag("Enemy"))
         {
             Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+
+            _gameManager.IsGemeOver();
+
             Destroy(this.gameObject);
         }
     }
