@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject _Player;
     [SerializeField] GameObject _button;
-    public bool _isGameOver = false;
+    [System.NonSerialized] public bool _isGameOver = false;
 
-    
+    [System.NonSerialized] public float score = 0;
+
+    [SerializeField] BossController _bossController;
+
+
     void Start()
     {
         _button.SetActive(false);
@@ -33,6 +38,7 @@ public class GameManager : MonoBehaviour
     public void OnClick()
     {
         print("aaa");
+        SceneManager.LoadScene("TitleScene");
     }
 
     public IEnumerator DelayTime()
@@ -42,4 +48,16 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public void ScoreUper()
+    {
+        if (_bossController._bossEffectEnd == true)
+        {
+            score += 10000;
+        }
+        else
+        {
+            score += 1000;
+        }
+        print(score);
+    }
 }

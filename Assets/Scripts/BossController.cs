@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-    [SerializeField] int _bossLife = 100;
+    [SerializeField] public int _bossLife = 100;
     [SerializeField] BossEffect _effect;
 
     [System.NonSerialized] public bool _bossEffectEnd = false;
+
+    [SerializeField] GameManager _gameManager;
 
     void Start()
     {
@@ -19,17 +21,21 @@ public class BossController : MonoBehaviour
     {
         if (_bossEffectEnd == true)
         {
+            _gameManager.ScoreUper();
             Destroy(this.gameObject);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _bossLife--;
-        print(_bossLife);
-        _effect._bossArrive = true;
-        if (_bossLife <= 0)
+        if (collision.gameObject.tag == "Bullet")
         {
-            _effect._bossDead = true;
+            _bossLife--;
+            print(_bossLife);
+            _effect._bossArrive = true;
+            if (_bossLife <= 0)
+            {
+                _effect._bossDead = true;
+            }
         }
     }
 }

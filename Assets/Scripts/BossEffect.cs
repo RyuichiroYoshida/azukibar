@@ -38,10 +38,6 @@ public class BossEffect : MonoBehaviour
                     x = localPos.x + effectPointX;
                     y = localPos.y + effectPointY;
                     Instantiate(_effectPrefab, new Vector3(x, y, 1), Quaternion.identity);
-                    print(effectPointX + "X");
-                    print(effectPointY + "Y");
-
-                    print(count + "count");
                     timer = 0f;
 
                 }

@@ -46,11 +46,16 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
-            Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+            PlayerEffect();
 
             _gameManager.IsGemeOver();
 
             Destroy(this.gameObject);
         }
+    }
+
+    public void PlayerEffect()
+    {
+        Instantiate(_effectPrefab, transform.position, Quaternion.identity);
     }
 }

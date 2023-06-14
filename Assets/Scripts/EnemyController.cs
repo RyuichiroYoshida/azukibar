@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public int _bossLife = 10;
-    public float _bossSpeed = 5f;
+    public int _enemyLife = 2;
+    public float _enemySpeed = 5f;
     public Transform _player;
+
+    [SerializeField] GameManager _gameManager;
 
     void Start()
     {
@@ -21,17 +23,22 @@ public class EnemyController : MonoBehaviour
     {
         if (_player != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _player.position, _bossSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _player.position, _enemySpeed * Time.deltaTime);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _bossLife--;
-        print(_bossLife);
-        if (_bossLife <= 0 )
+        if (collision.gameObject.tag == "Bullet")
         {
-            Destroy(this.gameObject);
+            _enemyLife--;
+            print(_enemyLife);
+            if (_enemyLife <= 0)
+            {
+                _gameManager.ScoreUper();
+
+                Destroy(this.gameObject);
+            }
         }
     }
 }
