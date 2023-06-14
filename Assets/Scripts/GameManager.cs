@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject _button;
     [System.NonSerialized] public bool _isGameOver = false;
 
-    [System.NonSerialized] public float score = 0;
+    [System.NonSerialized] public float _score = 0;
 
     [SerializeField] BossController _bossController;
 
@@ -19,11 +19,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _button.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        Text scoreText = FindObjectOfType<Text>();
+        
+        scoreText.text = _score.ToString();
+
         if (_isGameOver)
         {
             StartCoroutine(DelayTime());
@@ -52,12 +57,12 @@ public class GameManager : MonoBehaviour
     {
         if (_bossController._bossEffectEnd == true)
         {
-            score += 10000;
+            _score += 10000;
         }
         else
         {
-            score += 1000;
+            _score += 1000;
         }
-        print(score);
+        print(_score);
     }
 }
