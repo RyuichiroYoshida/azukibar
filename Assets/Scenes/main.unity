@@ -226,6 +226,7 @@ MonoBehaviour:
   _gameSpeed: 1
   _manager: {fileID: 1709992847}
   _playerController: {fileID: 504450221}
+  _effect: {fileID: 1657118420}
 --- !u!61 &17374161
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1379,6 +1380,7 @@ MonoBehaviour:
   _Player: {fileID: 504450210}
   _button: {fileID: 1308565585}
   _bossController: {fileID: 765229094}
+  _scoreText: {fileID: 1840998678}
 --- !u!1 &1715915088
 GameObject:
   m_ObjectHideFlags: 0

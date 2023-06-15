@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameProgression : MonoBehaviour
 {
     [SerializeField] float _gameSpeed = 5f;
+
     [SerializeField] GameManager _manager;
     [SerializeField] PlayerController _playerController;
-    // Start is called before the first frame update
+    [SerializeField] BossEffect _effect;
     void Start()
     {
         
@@ -16,7 +17,10 @@ public class GameProgression : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3 (Time.deltaTime *  _gameSpeed, 0, 0);
+        if (_effect._bossDead != true)
+        {
+            transform.position += new Vector3(Time.deltaTime * _gameSpeed, 0, 0);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

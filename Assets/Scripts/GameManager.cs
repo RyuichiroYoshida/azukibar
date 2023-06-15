@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject _Player;
     [SerializeField] GameObject _button;
-    [System.NonSerialized] public bool _isGameOver = false;
 
+    [System.NonSerialized] public bool _isGameOver = false;
+    [System.NonSerialized] public bool _isGameClear = false;
     [System.NonSerialized] public float _score = 0;
 
     [SerializeField] BossController _bossController;
+    [SerializeField] Text _scoreText;
 
 
     void Start()
@@ -25,19 +27,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Text scoreText = FindObjectOfType<Text>();
+        //Text scoreText = FindObjectOfType<Text>();
         
-        scoreText.text = _score.ToString();
+        _scoreText.text = _score.ToString();
 
         if (_isGameOver)
         {
             StartCoroutine(DelayTime());
+        }
+
+        if (_isGameClear)
+        {
+            print("gameclear");
         }
     }
 
     public void IsGemeOver()
     {
         _isGameOver = true;
+    }
+
+    public void IsGameClear()
+    {
+        _isGameClear = true;
     }
 
     public void OnClick()

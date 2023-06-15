@@ -22,6 +22,7 @@ public class BossController : MonoBehaviour
         if (_bossEffectEnd == true)
         {
             _gameManager.ScoreUper();
+            _gameManager.IsGameClear();
             Destroy(this.gameObject);
         }
     }
