@@ -651,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bossLife: 2
   _effect: {fileID: 1657118420}
+  _playerTransform: {fileID: 504450219}
   _gameManager: {fileID: 1709992847}
 --- !u!1 &1218571010
 GameObject:
