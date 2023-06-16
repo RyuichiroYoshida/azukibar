@@ -653,6 +653,7 @@ MonoBehaviour:
   _effect: {fileID: 1657118420}
   _playerTransform: {fileID: 504450219}
   _gameManager: {fileID: 1709992847}
+  _enemyBulletPrefab: {fileID: 4945852805494761494, guid: 8930953b1b113c8419cb9f47f3608e7a, type: 3}
 --- !u!1 &1218571010
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,32 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class EnemyBulletController : MonoBehaviour
 {
-    [SerializeField] float _bulletSpeed = 10f;
-    [SerializeField] float _lifeTime = 7;
-    float _time = 0;
-
     [SerializeField] GameObject _effectPrefab;
 
+    [SerializeField] float _enemyBulletSpeed = 10;
+    [SerializeField] float _enemyBulletLifeTime = 7f;
+
+    float _time = 0;
     void Start()
     {
-
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
         _time += Time.deltaTime;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.right * _bulletSpeed;
+        rb.velocity = Vector2.left * _enemyBulletSpeed;
 
-        if (_time > _lifeTime)
+        if (_time > _enemyBulletLifeTime)
         {
             Destroy(this.gameObject);
         }
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")

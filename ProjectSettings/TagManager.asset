@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Effect
   - Score
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

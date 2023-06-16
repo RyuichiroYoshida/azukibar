@@ -11,6 +11,7 @@ public class BossController : MonoBehaviour
     [System.NonSerialized] public bool _bossEffectEnd = false;
 
     [SerializeField] GameManager _gameManager;
+    [SerializeField] GameObject _enemyBulletPrefab;
 
     void Start()
     {
