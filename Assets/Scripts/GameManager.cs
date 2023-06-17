@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _button.SetActive(true);
         Time.timeScale = 0;
+
+        
     }
 
     public void ScoreUper()

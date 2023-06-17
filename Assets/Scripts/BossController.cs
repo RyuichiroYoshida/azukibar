@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BossController : MonoBehaviour
 {
@@ -8,19 +9,25 @@ public class BossController : MonoBehaviour
     [SerializeField] BossEffect _effect;
     [SerializeField] Transform _playerTransform;
 
+    int _bulletsCounts = 0;
+    int _enemyCounts = 0;
+    float timer = 0;
+
     [System.NonSerialized] public bool _bossEffectEnd = false;
 
     [SerializeField] GameManager _gameManager;
     [SerializeField] GameObject _enemyBulletPrefab;
+    [SerializeField] GameObject _enemyPrefab;
 
     void Start()
     {
         GameObject _player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+
         if (_bossEffectEnd == true)
         {
             _gameManager.ScoreUper();
@@ -28,10 +35,38 @@ public class BossController : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (_effect._bossArrive == true)
+        if (_effect._bossArrive == true && _effect._bossDead != true)
         { 
             float x = transform.position.x - _playerTransform.position.x;
-            print(x);
+
+            if (x < 7)
+            {
+                transform.position += new Vector3(Time.deltaTime * 2, 0, 0);
+            }
+
+            _bulletsCounts++;
+            if (_bulletsCounts <= 7)
+            {
+
+            }
+
+            _enemyCounts += 2;
+            if (_enemyCounts <= 10)
+            {
+                if (timer > 1)
+                {
+                    StartCoroutine(DelayTime());
+                    /*
+                    float enemyY = this.gameObject.transform.position.y + 3;
+                    Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY, this.gameObject.transform.position.z), Quaternion.identity);
+                    print("countNow");
+                    float enemyY2 = this.gameObject.transform.position.y - 3;
+                    Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY2, this.gameObject.transform.position.z), Quaternion.identity);
+                    */
+                    timer = 0;
+                }
+                _enemyCounts = 0;
+            }
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -46,5 +81,21 @@ public class BossController : MonoBehaviour
                 _effect._bossDead = true;
             }
         }
+    }
+
+    IEnumerator DelayTime()
+    {
+        print("delay1");
+        float random1 = Random.Range(0, 5);
+        float enemyY = this.gameObject.transform.position.y + random1;
+        Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY, this.gameObject.transform.position.z), Quaternion.identity);
+
+        yield return new WaitForSeconds(1);
+
+        float random2 = Random.Range(0, -5);
+        float enemyY2 = this.gameObject.transform.position.y - random2;
+        Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY2, this.gameObject.transform.position.z), Quaternion.identity);
+        print("delay2");
+        
     }
 }

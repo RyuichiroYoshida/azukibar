@@ -8,13 +8,14 @@ public class EnemyController : MonoBehaviour
 {
     public int _enemyLife = 2;
     public float _enemySpeed = 5f;
-    public Transform _player;
+    public GameObject _player;
 
     [SerializeField] GameManager _gameManager;
 
     void Start()
     {
-        
+        _player = GameObject.FindGameObjectWithTag("Player");
+        _gameManager = GameManager.FindAnyObjectByType<GameManager>();
         
     }
 
@@ -23,7 +24,7 @@ public class EnemyController : MonoBehaviour
     {
         if (_player != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _player.position, _enemySpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _enemySpeed * Time.deltaTime);
         }
     }
 
