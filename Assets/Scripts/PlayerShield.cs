@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerShield : MonoBehaviour
@@ -7,22 +8,41 @@ public class PlayerShield : MonoBehaviour
     [SerializeField] int _shieldLife = 100;
     [SerializeField] Transform _playerTransform;
 
+    [SerializeField] GameObject child;
+
+    public PlayerController playerController;
+
     void Start()
     {
-        
+        child.SetActive(false);
     }
 
     
     void Update()
     {
-        transform.Translate(_playerTransform.position.x + 5, _playerTransform.position.y, _playerTransform.position.z);
+        if (_shieldLife <= 0)
+        {
+            playerController.PlayerShield();
+
+            print("break");
+            child.SetActive(true);
+
+            StartCoroutine(ShieldBreakEffect());
+
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void ShieldBreak()
     {
-        if (collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "Enemy")
-        {
         _shieldLife--;
-        }
+    }
+
+    IEnumerator ShieldBreakEffect()
+    {
+        child.SetActive(true);
+        Destroy(gameObject);
+        yield return new WaitForSeconds(1);
+        //child.SetActive(false);
+
     }
 }

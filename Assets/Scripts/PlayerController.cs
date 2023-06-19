@@ -5,18 +5,29 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float _speed = 5f;
+
     [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] GameObject _homingBulletPrefab;
+    [SerializeField] GameObject _beamPrefab;
+
     [SerializeField] float _bulletCoolTime = 2;
-    float _time = 0;
+    [SerializeField] float _homingBulletCoolTime = 10;
+    [SerializeField] float _beamCoolTime = 1;
+
+    float _nomalBulletTime = 0;
+    float _homingBulletTime = 0;
+    float _beamTime = 0;
+
+    bool playerShieldBreak = false;
 
     public GameManager _gameManager;
+    public PlayerShield _playerShield;
 
     [SerializeField] GameObject _effectPrefab;
     void Start()
     {
         
     }
-    // Update is called once per frame
     void Update()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -29,33 +40,66 @@ public class PlayerController : MonoBehaviour
         rb.velocity = direction * _speed;
 
 
-        _time += Time.deltaTime;
-        if (Input.GetAxisRaw("Jump") == 1)
+        _nomalBulletTime += Time.deltaTime;
+        _homingBulletTime += Time.deltaTime;
+        _beamTime += Time.deltaTime;
+
+        Vector3 localPos = transform.localPosition;
+        localPos.x += 2;
+        if (_nomalBulletTime > _bulletCoolTime)
         {
-            Vector3 localPos = transform.localPosition;
-            localPos.x += 1;
-            if (_time > _bulletCoolTime)
+            Instantiate(_bulletPrefab, new Vector3(localPos.x, localPos.y, localPos.z), Quaternion.Euler(0, 0, 90f));
+            _nomalBulletTime = 0;
+        }
+
+        if (_homingBulletTime > _homingBulletCoolTime)
+        {
+            float randomY = Random.Range(-1, 1);
+            //Instantiate(_homingBulletPrefab, new Vector3(localPos.x - 2, localPos.y - randomY, localPos.z), Quaternion.identity);
+            _homingBulletTime = 0;
+        }
+
+        if (Input.GetButton("Jump"))
+        {
+            print("Space");
+            if (_beamTime > _beamCoolTime)
             {
-                Instantiate(_bulletPrefab, new Vector3(localPos.x, localPos.y, localPos.z), Quaternion.identity);
-                _time = 0;
+                Instantiate(_beamPrefab, new Vector3(localPos.x, localPos.y, localPos.z), Quaternion.identity);
+                _beamTime = 0;
+                print("SpaceTime");
             }
         }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
-            PlayerEffect();
+            _playerShield.ShieldBreak();
+            if (playerShieldBreak == true)
+            {
+                PlayerEffect();
 
-            _gameManager.IsGemeOver();
+                _gameManager.IsGemeOver();
 
-            Destroy(this.gameObject);
+                Destroy(this.gameObject);
+            }
         }
     }
 
     public void PlayerEffect()
     {
         Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+    }
+
+    public void PlayerShield()
+    {
+        playerShieldBreak = true;
     }
 }
