@@ -12,6 +12,7 @@ public class BossController : MonoBehaviour
     int _bulletsCounts = 0;
     int _enemyCounts = 0;
     float timer = 0;
+    float bulletTimer = 0;
 
     [System.NonSerialized] public bool _bossEffectEnd = false;
 
@@ -27,6 +28,7 @@ public class BossController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        bulletTimer += Time.deltaTime;
 
         if (_bossEffectEnd == true)
         {
@@ -39,7 +41,7 @@ public class BossController : MonoBehaviour
         { 
             float x = transform.position.x - _playerTransform.position.x;
 
-            if (x < 7)
+            if (x < 10)
             {
                 transform.position += new Vector3(Time.deltaTime * 2, 0, 0);
             }
@@ -55,7 +57,7 @@ public class BossController : MonoBehaviour
             {
                 if (timer > 1)
                 {
-                    StartCoroutine(DelayTime());
+                    StartCoroutine(SpawnDelayTime());
                     /*
                     float enemyY = this.gameObject.transform.position.y + 3;
                     Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY, this.gameObject.transform.position.z), Quaternion.identity);
@@ -66,6 +68,12 @@ public class BossController : MonoBehaviour
                     timer = 0;
                 }
                 _enemyCounts = 0;
+            }
+            if (bulletTimer > 0.1)
+            {
+                float y = Random.Range(-3, 3);
+                Instantiate(_enemyBulletPrefab, new Vector3(transform.position.x, y, transform.position.z), Quaternion.Euler(0, 0, 90f));
+                bulletTimer = 0;
             }
         }
     }
@@ -83,16 +91,16 @@ public class BossController : MonoBehaviour
         }
     }
 
-    IEnumerator DelayTime()
+    IEnumerator SpawnDelayTime()
     {
         print("delay1");
-        float random1 = Random.Range(0, 5);
+        float random1 = Random.Range(0, 7);
         float enemyY = this.gameObject.transform.position.y + random1;
         Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY, this.gameObject.transform.position.z), Quaternion.identity);
 
         yield return new WaitForSeconds(1);
 
-        float random2 = Random.Range(0, -5);
+        float random2 = Random.Range(0, -7);
         float enemyY2 = this.gameObject.transform.position.y - random2;
         Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY2, this.gameObject.transform.position.z), Quaternion.identity);
         print("delay2");
